@@ -10,9 +10,10 @@ before_install:
   # install heroku CLI
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   # login to docker registries (dockerhub + heroku)
-  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
+  - heroku container:login
 deploy:
   provider: script
   script:
-    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+    heroku container:push web
+    heroku container:release web
   on: master
