@@ -10,10 +10,13 @@ before_install:
   # install heroku CLI
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   # login to docker registries (dockerhub + heroku)
-  - heroku container:login
 deploy:
-  provider: script
-  script:
-    heroku container:push web
-    heroku container:release web
+  provider: heroku
+  api_key:
+    secure: "AW+SYj1zDkUn8MtuUFRt4m6IxMTDOvpZHCHVxg1D0lERG/fY9OVFI3kjJMhKChz5E9S+PR2hSwbJHpekwj7gAX52x2E+Nogf3qN3kfFKFfaqTpeqRnRIN12404Q4PhtV2dwJSefEdLwT2u6LhkPy4rXykzBBkO5PnSnjpYjUQwpJU74hXSh+eJnYysI5VSnnK5YiW4IVbLLgbzwzhWli4SbSFSkTqfwxoxUs2rrjfJkmCQkQvw3ggSQy2eGIJjgT/In5NfyvPueVaZBcwcjV4yafydoKVymEDdnIPm/ZbQBwL3INmwdyXeZICe10CAkfQNvBVtFNXu/E+uiwcm6lEiqVX1taw4uYvUg6ysChayttoQbzJaZO3RLJQuGkqt/1pJQlyNnubmzF1jkQu0ccGeoUakCd1rS5li87JlfFR2M1iqF1Sjjk7gkXFg3Rg0wFS9VlkD3LYf9wv6cVuuKwq6N7DoBWY1TUOzNE20uWZdCKowCR6DwjxOO1va/kGYKlmLCWZwSvJhI/qmxQv/72IpTjBusi7VVwpoNZXXa0+cmC1b2APACmpGbq66Qu6aL2/mnk72wG1NhqJamBDp6/raRqJMxywB7YiEs47LLIVIg7qXnFMGvmKDW549ud9SFF32X8GpOoZgntTZvZ1WO9k39BX42GRJR0LFVV7kJ/2PM="
+  app: ayaher_todoapp
+  run:
+    - "heroku container:login"
+    - "heroku container:push web"
+    - "heroku container:release web"
   on: master
