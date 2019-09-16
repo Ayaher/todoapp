@@ -6,3 +6,13 @@ services:
   - docker
 before_install:
   - docker build -t todoapp .
+  - docker tag todoapp registry.heroku.com/$HEROKU_APP_NAME/web
+  # install heroku CLI
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+  # login to docker registries (dockerhub + heroku)
+  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
+deploy:
+  provider: script
+  script:
+    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+  on: master
