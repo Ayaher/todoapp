@@ -25,3 +25,6 @@ RUN rm -rf /usr/local/apache2/htdocs/*
 COPY --from=builder /app/index.html /usr/local/apache2/htdocs/
 COPY --from=builder /app/js /usr/local/apache2/htdocs/js
 COPY --from=builder /app/node_modules /usr/local/apache2/htdocs/node_modules
+#update apache port at runtime for Heroku
+ENTRYPOINT []
+CMD sed -i "s/80/$PORT/g" /etc/apache2/sites-enabled/000-default.conf /etc/apache2/ports.conf && httpd-foreground
