@@ -1,22 +1,20 @@
 language: node_js
 node_js:
-  - 7
+- 7
 script: echo "npm test temporarily disabled"
 services:
-  - docker
+- docker
 before_install:
-  - docker build -t todoapp .
-  - docker tag todoapp registry.heroku.com/$HEROKU_APP_NAME/web
-  # install heroku CLI
-  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
-  # login to docker registries (dockerhub + heroku)
+- docker build -t todoapp .
+- docker tag todoapp registry.heroku.com/$HEROKU_APP_NAME/web
+- wget -qO- https://toolbelt.heroku.com/install.sh | sh
 deploy:
   provider: heroku
   api_key:
-    secure: "AW+SYj1zDkUn8MtuUFRt4m6IxMTDOvpZHCHVxg1D0lERG/fY9OVFI3kjJMhKChz5E9S+PR2hSwbJHpekwj7gAX52x2E+Nogf3qN3kfFKFfaqTpeqRnRIN12404Q4PhtV2dwJSefEdLwT2u6LhkPy4rXykzBBkO5PnSnjpYjUQwpJU74hXSh+eJnYysI5VSnnK5YiW4IVbLLgbzwzhWli4SbSFSkTqfwxoxUs2rrjfJkmCQkQvw3ggSQy2eGIJjgT/In5NfyvPueVaZBcwcjV4yafydoKVymEDdnIPm/ZbQBwL3INmwdyXeZICe10CAkfQNvBVtFNXu/E+uiwcm6lEiqVX1taw4uYvUg6ysChayttoQbzJaZO3RLJQuGkqt/1pJQlyNnubmzF1jkQu0ccGeoUakCd1rS5li87JlfFR2M1iqF1Sjjk7gkXFg3Rg0wFS9VlkD3LYf9wv6cVuuKwq6N7DoBWY1TUOzNE20uWZdCKowCR6DwjxOO1va/kGYKlmLCWZwSvJhI/qmxQv/72IpTjBusi7VVwpoNZXXa0+cmC1b2APACmpGbq66Qu6aL2/mnk72wG1NhqJamBDp6/raRqJMxywB7YiEs47LLIVIg7qXnFMGvmKDW549ud9SFF32X8GpOoZgntTZvZ1WO9k39BX42GRJR0LFVV7kJ/2PM="
+    secure: N8y5CXMPaEq4Eg1DKW+2pCUsK8OzdxSN3z6eWaFQTAoEa+H4o8aUdR8C/tzzdHXw0Z4noCrzM8OzCAlEbH1xqUCkTKFTwmCm+HYsKKfM1w6NUmlHCVMGdrbrEVkbuLJpO8IIEcuKEeCY9ZIsT7DWBA6En/ZW1ajKR4S+io+SrNIx+n0dEtXfEpniHO0fzpdCb9a989M8cf/Ojv/RYKG6moIFTHDZZOXll2bwN25Loc09qUZ8Rd2KIY4tSDf5BPwbV1W8gGxmYMBW7mTPkQ0/AkhgMYmnUK45DnawpocS4gTgOm9W+rU+Hqi1Zk9dipXa0WBFyj0KfxpI/FrU7UjSXju01iCDGFS90JPQQa1aAJhy1nwlHRbgZGICSwedQAOe7TxuXLOgCQ+8L73fBYOB+UZOMrCGrR75vrsSsd5MgaFSZJi8go5EbgJz8D1B7Bdm5fwXVw0MfcXKq7S6Q9sObbhyhqu0x5uidE985FcTF4ihVBjVpeTgqYrU2XOko1jMJ0MykutCdGSWGjO5sAthiRNcpKIRpJMPyVAeGjcnd0/42rBK5sRRVQdObmlmHGay9gjCsfd0yfQXR+Ba6l3m54dC9gj/mEuloXDgoUlepTJDbTOWVukYveQHp4PWYNb+0k7dpHjAa0vjP8BymhykxB2Bg50SGISD6n1EFsl4F5A=
   app: ayaher_todoapp
   run:
-    - "heroku container:login"
-    - "heroku container:push web"
-    - "heroku container:release web"
+  - heroku container:login
+  - heroku container:push web
+  - heroku container:release web
   on: master
