@@ -1,5 +1,0 @@
-{
-  "name": "500px Semaphore demo",
-  "description": "Just a demo app",
-  "image": "httpd:2.4-alpine"
-}
