@@ -1,20 +1,24 @@
-language: sh
+sudo: required
+language: node_js
+node_js:
+  - "9"
+
 services:
 - docker
+
 before_install:
   # install heroku CLI
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   # login to docker registries (dockerhub + heroku)
-  #- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  #- echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
+  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
+
+script:
+  # build docker images
+  - docker build -t registry.heroku.com/$HEROKU_APP_NAME/web .
 
 deploy:
-  provider: heroku
-  api_key:
-    secure: N8y5CXMPaEq4Eg1DKW+2pCUsK8OzdxSN3z6eWaFQTAoEa+H4o8aUdR8C/tzzdHXw0Z4noCrzM8OzCAlEbH1xqUCkTKFTwmCm+HYsKKfM1w6NUmlHCVMGdrbrEVkbuLJpO8IIEcuKEeCY9ZIsT7DWBA6En/ZW1ajKR4S+io+SrNIx+n0dEtXfEpniHO0fzpdCb9a989M8cf/Ojv/RYKG6moIFTHDZZOXll2bwN25Loc09qUZ8Rd2KIY4tSDf5BPwbV1W8gGxmYMBW7mTPkQ0/AkhgMYmnUK45DnawpocS4gTgOm9W+rU+Hqi1Zk9dipXa0WBFyj0KfxpI/FrU7UjSXju01iCDGFS90JPQQa1aAJhy1nwlHRbgZGICSwedQAOe7TxuXLOgCQ+8L73fBYOB+UZOMrCGrR75vrsSsd5MgaFSZJi8go5EbgJz8D1B7Bdm5fwXVw0MfcXKq7S6Q9sObbhyhqu0x5uidE985FcTF4ihVBjVpeTgqYrU2XOko1jMJ0MykutCdGSWGjO5sAthiRNcpKIRpJMPyVAeGjcnd0/42rBK5sRRVQdObmlmHGay9gjCsfd0yfQXR+Ba6l3m54dC9gj/mEuloXDgoUlepTJDbTOWVukYveQHp4PWYNb+0k7dpHjAa0vjP8BymhykxB2Bg50SGISD6n1EFsl4F5A=
-  app: ayaher-todoapp
-  run:
-  - heroku container:login
-  - heroku container:push web
-  - heroku container:release web
+  provider: script
+  script:
+    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+    heroku container:release web --app $HEROKU_APP_NAME
   on: master
