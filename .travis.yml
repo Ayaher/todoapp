@@ -1,7 +1,4 @@
-language: node_js
-node_js:
-  - 7
-script: npm build
+language: sh
 services:
 - docker
 deploy:
@@ -12,6 +9,5 @@ deploy:
   run:
   - heroku container:login
   - heroku container:push web
-  - echo "OIIII"
   - heroku container:release web
   on: master
