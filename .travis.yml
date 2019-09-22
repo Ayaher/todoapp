@@ -12,5 +12,6 @@ deploy:
   run:
   - heroku container:login
   - heroku container:push web
+  - echo "OIIII"
   - heroku container:release web
   on: master
