@@ -10,6 +10,8 @@ services:
 before_install:
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 
 script:
   - npm install
