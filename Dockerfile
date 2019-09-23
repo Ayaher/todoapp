@@ -24,8 +24,9 @@ RUN npm install
 
 FROM php:7.0-apache
 RUN rm -rf /usr/local/apache2/htdocs/*
-COPY --from=builder /app/index.html /var/www/html/
-COPY --from=builder /app/js /var/www/html/js
-COPY --from=builder /app/node_modules /var/www/html/node_modules
+#COPY --from=builder /app/index.html /var/www/html/
+COPY /app/index.html /var/www/html/
+COPY /app/js /var/www/html/js
+COPY /app/node_modules /var/www/html/node_modules
 ENTRYPOINT []
 CMD sed -i "s/80/$PORT/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf && docker-php-entrypoint apache2-foreground
